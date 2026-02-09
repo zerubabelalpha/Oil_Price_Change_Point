@@ -6,8 +6,9 @@ from pathlib import Path
 def load_oil_data(filepath):
    
     df = pd.read_csv(filepath)
-    # Parse dates with specific format for 2-digit years (e.g. 20-May-87)
-    df['Date'] = pd.to_datetime(df['Date'], format='%d-%b-%y')
+    # Parse dates with mixed formats (e.g. 20-May-87 and Apr 22, 2020)
+    # using format='mixed' allows pandas to infer the format for each element
+    df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, format='mixed')
     
     # Fix potential future years (e.g. 2087 -> 1987) if mapping went to future
     current_year = pd.Timestamp.now().year
