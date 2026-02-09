@@ -18,7 +18,7 @@ This project implements Bayesian change point detection to identify structural b
 
 ### Prerequisites
 
-- Python 3.8 or higher
+- Python 3.11 or higher
 - pip package manager
 
 ### Setup
@@ -33,7 +33,7 @@ This project implements Bayesian change point detection to identify structural b
    pip install -r requirements.txt
    ```
    
-   *Note: This project uses a flat run-script structure, so standard package installation is not required.*
+   
 
 ## Usage
 
@@ -62,7 +62,7 @@ This will:
 
 Example:
 ```bash
-python scripts/run_pipeline.py --draws 5000 --output my_results/
+python scripts/run_pipeline.py 
 ```
 
 ### Interactive Notebook
@@ -126,6 +126,4 @@ After running the analysis, the following files are generated in the `outputs/` 
 4. **regime_comparison.png** - Detailed regime comparison
 5. **eda_time_series.png**, **eda_distribution.png**, **eda_volatility.png** - EDA plots
 
-## License
 
-This project is provided as-is for educational and research purposes.
