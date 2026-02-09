@@ -8,11 +8,11 @@ import argparse
 project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root / 'src'))
 
-from oil_price_changepoint.data import load_oil_data, clean_data, prepare_data_for_modeling
-from oil_price_changepoint.eda import calculate_statistics, plot_time_series, plot_distribution, plot_volatility
-from oil_price_changepoint.model import build_changepoint_model, sample_model, check_convergence, extract_results
-from oil_price_changepoint.visualization import plot_changepoint_results, plot_trace_diagnostics, plot_regime_comparison
-from oil_price_changepoint.report import generate_report
+from data import load_oil_data, clean_data, prepare_data_for_modeling
+from eda import calculate_statistics, plot_time_series, plot_distribution, plot_volatility
+from model import build_changepoint_model, sample_model, check_convergence, extract_results
+from visualization import plot_changepoint_results, plot_trace_diagnostics, plot_regime_comparison
+from report import generate_report
 
 def main():
     parser = argparse.ArgumentParser(description="Run Oil Price Change Point Analysis Pipeline")
