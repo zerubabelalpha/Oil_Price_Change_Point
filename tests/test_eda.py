@@ -32,9 +32,7 @@ def test_calculate_statistics(sample_df):
 
 def test_calculate_statistics_empty():
     empty_df = pd.DataFrame({'Date': [], 'Price': []})
-    # Depending on implementation, this might raise error or return NaNs
-    # Just checking it doesn't crash immediately is a good start, 
-    # but let's assume valid input for now or check if it handles it gracefully
+
     try:
         stats = calculate_statistics(empty_df)
         assert pd.isna(stats['mean']) or stats['mean'] == 0

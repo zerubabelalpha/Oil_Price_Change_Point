@@ -18,8 +18,6 @@ def sample_data():
     return pd.DataFrame({'Date': dates, 'Price': prices})
 
 def test_clean_data(sample_data):
-    # Test that NaN values are handled (dropped or filled, assuming implementation drops)
-    # The current implementation drops NaNs
     df_clean = clean_data(sample_data)
     assert len(df_clean) == 9  # One NaN should be removed
     assert df_clean['Price'].isna().sum() == 0
