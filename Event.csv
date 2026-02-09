@@ -1,0 +1,22 @@
+Event_Name,Start_Date,Category,Description
+Suez Crisis,1956-10-29,Geopolitical,Closure of the Suez Canal restricted oil flow to Europe.
+OPEC Founded,1960-09-14,Institution,Formation of the organization to coordinate petroleum policies.
+Yom Kippur War Embargo,1973-10-17,Geopolitical,Arab OPEC members embargoed oil to the West; prices quadrupled.
+Iranian Revolution,1978-12-01,Geopolitical,Overthrow of the Shah led to massive production drop and price doubling.
+Iran-Iraq War,1980-09-22,Geopolitical,Long-term conflict decimated supply from two major producers.
+Saudi Price War,1985-08-15,OPEC Decision,Saudi Arabia flooded the market to reclaim lost market share.
+Iraqi Invasion of Kuwait,1990-08-02,Geopolitical,Invasion led to a UN embargo and a sharp price spike.
+9/11 Terrorist Attacks,2001-09-11,Economic Shock,Global uncertainty and aviation halt caused a sudden demand drop.
+Global Financial Crisis,2007-01-01,Economic Shock,Major price rise followed by a crash due to demand collapse.
+Arab Spring,2011-02-15,Geopolitical,Civil unrest across MENA region disrupted North African output.
+US Shale Boom Reaction,2014-11-27,OPEC Decision,OPEC maintained output to pressure high-cost US shale producers.
+Formation of OPEC+,2016-11-30,OPEC Decision,OPEC and Russia agreed to the first coordinated supply cuts.
+COVID-19 Pandemic,2020-02-01,Economic Shock,Global lockdowns led to an unprecedented demand collapse.
+Russia-Saudi Price War,2020-03-08,OPEC Decision,Failed negotiations led to a production hike during the pandemic.
+Invasion of Ukraine,2022-02-24,Geopolitical,Sanctions on Russia triggered massive energy security concerns.
+OPEC+ Stabilization Cuts,2022-10-01,OPEC Decision,Major output cuts to stabilize prices after post-pandemic volatility.
+Gaza Conflict,2023-10-07,Geopolitical,Regional tensions raised the geopolitical risk premium.
+Israel-Iran Conflict Surge,2025-06-13,Geopolitical,Oil prices surged following direct military engagement in the region.
+OPEC+ Quota Increase,2025-09-01,OPEC Decision,End of multi-year cuts as quotas were raised to meet demand.
+Venezuelan Supply Surge,2026-01-06,Geopolitical,Market volatility amid unexpected Venezuelan export shifts.
+Hormuz Drone Tensions,2026-02-03,Geopolitical,Price uptick after US-Iran military friction near the Strait of Hormuz.
