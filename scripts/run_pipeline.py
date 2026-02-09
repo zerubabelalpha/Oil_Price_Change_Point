@@ -34,6 +34,12 @@ def main():
         
     df = load_oil_data(data_path)
     df = clean_data(df)
+    
+    # Save processed data
+    processed_path = output_dir / 'processed_data.csv'
+    df.to_csv(processed_path, index=False)
+    print(f"✓ Saved processed data to {processed_path}")
+    
     data_dict = prepare_data_for_modeling(df)
     print(f"Loaded {len(df)} records. Date range: {df['Date'].min().date()} to {df['Date'].max().date()}")
 
