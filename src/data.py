@@ -25,10 +25,11 @@ def clean_data(df):
     df = df.sort_values('Date').reset_index(drop=True)
     
     # Handle missing values using forward fill
-    df['Price'] = df['Price'].fillna(method='ffill')
+    # Handle missing values using forward fill
+    df['Price'] = df['Price'].ffill()
     
     # If there are still missing values at the start, use backward fill
-    df['Price'] = df['Price'].fillna(method='bfill')
+    df['Price'] = df['Price'].bfill()
     
     # Remove any remaining rows with missing values
     df = df.dropna()

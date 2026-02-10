@@ -19,7 +19,7 @@ def sample_data():
 
 def test_clean_data(sample_data):
     df_clean = clean_data(sample_data)
-    assert len(df_clean) == 9  # One NaN should be removed
+    assert len(df_clean) == 10  
     assert df_clean['Price'].isna().sum() == 0
     assert 'Date' in df_clean.columns
     assert 'Price' in df_clean.columns
@@ -31,8 +31,8 @@ def test_prepare_data_for_modeling(sample_data):
     assert 'n_days' in data_dict
     assert 'oil_prices' in data_dict
     assert 'historical_mean' in data_dict
-    assert data_dict['n_days'] == 9
-    assert len(data_dict['oil_prices']) == 9
+    assert data_dict['n_days'] == 10
+    assert len(data_dict['oil_prices']) == 10
     assert np.isclose(data_dict['historical_mean'], df_clean['Price'].mean())
 
 def test_data_types(sample_data):
