@@ -6,8 +6,8 @@ from pathlib import Path
 def load_oil_data(filepath):
    
     df = pd.read_csv(filepath)
-    # Parse dates with specific format for 2-digit years (e.g. 20-May-87)
-    df['Date'] = pd.to_datetime(df['Date'], format='%d-%b-%y')
+    # Parse dates with format='mixed' to handle different date string styles
+    df['Date'] = pd.to_datetime(df['Date'], format='mixed')
     
     # Fix potential future years (e.g. 2087 -> 1987) if mapping went to future
     current_year = pd.Timestamp.now().year
@@ -24,10 +24,10 @@ def clean_data(df):
     df = df.sort_values('Date').reset_index(drop=True)
     
     # Handle missing values using forward fill
-    df['Price'] = df['Price'].fillna(method='ffill')
+    df['Price'] = df['Price'].ffill()
     
     # If there are still missing values at the start, use backward fill
-    df['Price'] = df['Price'].fillna(method='bfill')
+    df['Price'] = df['Price'].bfill()
     
     # Remove any remaining rows with missing values
     df = df.dropna()

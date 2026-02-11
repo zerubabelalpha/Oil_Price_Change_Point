@@ -1,2 +1,3 @@
-data/BrentOilPrices.csv
+data/
 .venv
+.pytensorrc

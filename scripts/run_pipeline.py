@@ -9,7 +9,8 @@ project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root / 'src'))
 
 from data import load_oil_data, clean_data, prepare_data_for_modeling
-from eda import calculate_statistics, plot_time_series, plot_distribution, plot_volatility
+from eda import (calculate_statistics, plot_time_series, plot_distribution, 
+                 plot_volatility, calculate_log_returns, check_stationarity, plot_log_returns)
 from model import build_changepoint_model, sample_model, check_convergence, extract_results
 from visualization import plot_changepoint_results, plot_trace_diagnostics, plot_regime_comparison
 from report import generate_report
@@ -49,6 +50,12 @@ def main():
     plot_time_series(df, save_path=output_dir / 'eda_time_series.png')
     plot_distribution(df, save_path=output_dir / 'eda_distribution.png')
     plot_volatility(df, window=30, save_path=output_dir / 'eda_volatility.png')
+
+    # 2b. Log Returns and Stationarity
+    print("\n[Step 2b] Analyzing Log Returns and Stationarity...")
+    df_returns = calculate_log_returns(df)
+    plot_log_returns(df_returns, save_path=output_dir / 'eda_log_returns.png')
+    check_stationarity(df_returns['Log_Returns'])
 
     # 3. Build and Sample Model
     print("\n[Step 3] Building and Sampling Bayesian Model...")
