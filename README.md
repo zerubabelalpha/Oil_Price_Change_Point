@@ -18,7 +18,7 @@ This project implements Bayesian change point detection to identify structural b
 
 ### Prerequisites
 
-- Python 3.8 or higher
+- Python 3.11 or higher
 - pip package manager
 
 ### Setup
@@ -28,11 +28,12 @@ This project implements Bayesian change point detection to identify structural b
    cd oil_price_changepoint
    ```
 
-2. Install the package in editable mode (recommended):
+2. Install dependencies:
    ```bash
-   pip install -e .
+   pip install -r requirements.txt
    ```
-   This installs the `oil_price_changepoint` package and its dependencies.
+   
+   
 
 ## Usage
 
@@ -54,14 +55,14 @@ This will:
 7. Create a comprehensive report
 
 **Options:**
-- `--data`: Path to input CSV data (default: `data/sample_oil_data.csv`)
+- `--data`: Path to input CSV data (default: `data/BrentOilPrices.csv`)
 - `--output`: Directory to save outputs (default: `outputs/`)
 - `--draws`: Number of MCMC draws (default: 2000)
 - `--chains`: Number of MCMC chains (default: 4)
 
 Example:
 ```bash
-python scripts/run_pipeline.py --draws 5000 --output my_results/
+python scripts/run_pipeline.py 
 ```
 
 ### Interactive Notebook
@@ -85,19 +86,18 @@ oil_price_changepoint/
 ├── data/
 │   └── BrentOilPrices.csv          # Brent oil price dataset
 ├── notebooks/
+│   ├── README.md                    # Notebook documentation
 │   └── oil_price_analysis.ipynb     # Interactive analysis notebook
 ├── outputs/                         # Generated visualizations and reports
 ├── scripts/
 │   └── run_pipeline.py              # Main execution script
 ├── src/
-│   └── oil_price_changepoint/       # Source package
-│       ├── __init__.py
-│       ├── data.py                  # Data loading and cleaning
-│       ├── eda.py                   # Exploratory data analysis
-│       ├── model.py                 # Bayesian model implementation
-│       ├── visualization.py         # Visualization functions
-│       └── report.py                # Report generation
-├── setup.py                         # Package installation script
+│   ├── __init__.py
+│   ├── data.py                  # Data loading and cleaning
+│   ├── eda.py                   # Exploratory data analysis
+│   ├── model.py                 # Bayesian model implementation
+│   ├── visualization.py         # Visualization functions
+│   └── report.py                # Report generation
 ├── requirements.txt                 # Python dependencies
 └── README.md                        # This file
 ```
@@ -126,6 +126,4 @@ After running the analysis, the following files are generated in the `outputs/` 
 4. **regime_comparison.png** - Detailed regime comparison
 5. **eda_time_series.png**, **eda_distribution.png**, **eda_volatility.png** - EDA plots
 
-## License
 
-This project is provided as-is for educational and research purposes.

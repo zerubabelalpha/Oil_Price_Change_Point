@@ -6,7 +6,7 @@ import argparse
 # Add the src directory to the path so we can import the package
 # if it's not installed in the environment yet
 project_root = Path(__file__).resolve().parent.parent
-sys.path.append(str(project_root / 'src'))
+sys.path.append(str(project_root / './src'))
 
 from data import load_oil_data, clean_data, prepare_data_for_modeling
 from eda import (calculate_statistics, plot_time_series, plot_distribution, 
@@ -16,12 +16,9 @@ from visualization import plot_changepoint_results, plot_trace_diagnostics, plot
 from report import generate_report
 
 def main():
-    parser = argparse.ArgumentParser(description="Run Oil Price Change Point Analysis Pipeline")
+    parser = argparse.ArgumentParser(description="Run Oil Price Change Point Analysis Pipeline (Task 1)")
     parser.add_argument("--data", type=str, default=str(project_root / 'data' / 'BrentOilPrices.csv'), help="Path to input CSV data")
     parser.add_argument("--output", type=str, default=str(project_root / 'outputs'), help="Directory to save outputs")
-    parser.add_argument("--draws", type=int, default=2000, help="Number of MCMC draws per chain")
-    parser.add_argument("--tune", type=int, default=1000, help="Number of MCMC tuning iterations")
-    parser.add_argument("--chains", type=int, default=4, help="Number of MCMC chains")
     
     args = parser.parse_args()
     
@@ -29,7 +26,7 @@ def main():
     output_dir = Path(args.output)
     output_dir.mkdir(exist_ok=True, parents=True)
     
-    print(f"Running analysis pipeline...")
+    print(f"Running analysis pipeline (Task 1: Data & EDA)...")
     print(f"Data: {data_path}")
     print(f"Output: {output_dir}")
     
@@ -41,6 +38,12 @@ def main():
         
     df = load_oil_data(data_path)
     df = clean_data(df)
+    
+    # Save processed data
+    processed_path = output_dir / 'processed_data.csv'
+    df.to_csv(processed_path, index=False)
+    print(f"✓ Saved processed data to {processed_path}")
+    
     data_dict = prepare_data_for_modeling(df)
     print(f"Loaded {len(df)} records. Date range: {df['Date'].min().date()} to {df['Date'].max().date()}")
 
@@ -108,7 +111,7 @@ def main():
     generate_report(results, data_dict, convergence_ok, report_path)
     
     print("\n" + "="*50)
-    print("PIPELINE COMPLETE")
+    print("TASK 1 COMPLETE")
     print("="*50)
     print(f"check outputs in: {output_dir}")
 
