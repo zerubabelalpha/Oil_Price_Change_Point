@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
+from statsmodels.tsa.stattools import adfuller
 
 
 
@@ -116,5 +117,66 @@ def plot_volatility(df, window=30, save_path=None):
     if save_path:
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
         print(f"Saved volatility plot to {save_path}")
+    
+    plt.show()
+
+
+def calculate_log_returns(df):
+    """
+    Calculate log returns: log(price_t) - log(price_{t-1})
+    """
+    df = df.copy()
+    # Ensure Price is float and handle any non-positive values
+    df['Price'] = pd.to_numeric(df['Price'], errors='coerce')
+    df = df[df['Price'] > 0]
+    
+    df['Log_Price'] = np.log(df['Price'])
+    df['Log_Returns'] = df['Log_Price'].diff()
+    
+    # Remove the first row which will be NaN
+    return df.dropna(subset=['Log_Returns'])
+
+
+def check_stationarity(series):
+    """
+    Perform Augmented Dickey-Fuller test for stationarity
+    """
+    print("\n" + "="*50)
+    print("STATIONARITY TEST (ADF)")
+    print("="*50)
+    
+    result = adfuller(series)
+    print(f'ADF Statistic: {result[0]:.4f}')
+    print(f'p-value: {result[1]:.4e}')
+    print('Critical Values:')
+    for key, value in result[4].items():
+        print(f'   {key}: {value:.3f}')
+    
+    is_stationary = result[1] < 0.05
+    if is_stationary:
+        print("\n[OK] Result: The series is STATIONARY (reject null hypothesis)")
+    else:
+        print("\n[WARN] Result: The series is NON-STATIONARY (fail to reject null hypothesis)")
+    print("="*50)
+    
+    return result
+
+
+def plot_log_returns(df, save_path=None):
+    """
+    Plot log returns to observe volatility clustering
+    """
+    plt.figure(figsize=(14, 6))
+    plt.plot(df['Date'], df['Log_Returns'], color='purple', alpha=0.7, linewidth=1)
+    plt.xlabel('Date', fontsize=12)
+    plt.ylabel('Log Returns', fontsize=12)
+    plt.title('Oil Price Log Returns (Volatility Clustering)', fontsize=14, fontweight='bold')
+    plt.axhline(0, color='black', linestyle='--', alpha=0.3)
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
+    
+    if save_path:
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        print(f"Saved log returns plot to {save_path}")
     
     plt.show()

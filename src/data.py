@@ -6,9 +6,8 @@ from pathlib import Path
 def load_oil_data(filepath):
    
     df = pd.read_csv(filepath)
-    # Parse dates with mixed formats (e.g. 20-May-87 and Apr 22, 2020)
-    # using format='mixed' allows pandas to infer the format for each element
-    df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, format='mixed')
+    # Parse dates with format='mixed' to handle different date string styles
+    df['Date'] = pd.to_datetime(df['Date'], format='mixed')
     
     # Fix potential future years (e.g. 2087 -> 1987) if mapping went to future
     current_year = pd.Timestamp.now().year
@@ -24,7 +23,6 @@ def clean_data(df):
     # Sort by date
     df = df.sort_values('Date').reset_index(drop=True)
     
-    # Handle missing values using forward fill
     # Handle missing values using forward fill
     df['Price'] = df['Price'].ffill()
     
