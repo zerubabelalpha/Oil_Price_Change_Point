@@ -1,129 +1,119 @@
-# Oil Price Change Point Detection
+# Oil Price Change Point Detection & Analytics
 
-A comprehensive Bayesian analysis system for detecting significant regime shifts in oil prices using PyMC.
+A comprehensive Bayesian analysis system designed to detect structural breaks (regime shifts) in Brent Crude oil prices. This project combines advanced probabilistic modeling with a modern, interactive dashboard to help stakeholders correlate market volatility with global geopolitical and economic events.
 
-## Overview
+---
 
-This project implements Bayesian change point detection to identify structural breaks in oil price time series data. The analysis quantifies uncertainty through credible intervals and provides detailed visualizations of detected regime changes.
+## Key Features
 
-## Features
+*   **Bayesian Change Point Detection**: Leverages **PyMC** to identify the exact date and magnitude of regime shifts.
+*   **Interactive Analytics Dashboard**: A full-stack application built with **Flask** and **React (Vite)** for real-time data exploration.
+*   **Dynamic Visualizations**: High-fidelity charts using **Recharts** and **Matplotlib**, highlighting credible intervals and event correlations.
+*   **MCMC Diagnostics**: Robust convergence checks including R-hat, ESS, and trace plots to ensure model reliability.
+*   **Automated Insights**: Generates comprehensive markdown reports and statistical summaries of market transitions.
 
-- **Bayesian Change Point Detection**: Uses PyMC to model regime shifts
-- **Comprehensive Diagnostics**: MCMC convergence checks (R-hat, ESS)
-- **Rich Visualizations**: Time series plots, posterior distributions, regime comparisons
-- **Automated Reporting**: Generates detailed markdown reports with findings
-- **Exploratory Analysis**: Statistical summaries and volatility analysis
+---
 
-## Installation
+## Visual Highlights
+
+### Change Point Analysis
+![Change Point Detection](outputs/changepoint_results.png)
+*Figure 1: Detected regime shift with 95% Credible Interval and posterior distributions.*
+
+### Regime Comparison
+![Regime Comparison](outputs/regime_comparison.png)
+*Figure 2: Side-by-side comparison of price levels and volatility before and after the transition.*
+
+---
+## System Architecture
+
+```mermaid
+graph TD
+    A[BrentOilPrices.csv] --> B(Data Pipeline)
+    B --> C{Bayesian Model}
+    C --> D[MCMC Sampling]
+    D --> E[Analysis Results]
+    E --> F[Automated Reports]
+    E --> G[Interactive Dashboard]
+    
+    subgraph Dashboard
+    G --> H[Flask Backend]
+    H --> I[React Frontend]
+    I --> J[Recharts Visualization]
+    end
+```
+
+---
+
+## Installation & Setup
 
 ### Prerequisites
+- **Python 3.11+**
+- **Node.js 18+**
+- **pip** & **npm**
 
-- Python 3.11 or higher
-- pip package manager
-
-### Setup
-
-1. Clone or navigate to the project directory:
+### Core Setup
+1. Clone the repository:
    ```bash
+   git clone https://github.com/zerubabelalpha/oil-price-changepoint.git
    cd oil_price_changepoint
    ```
-
-2. Install dependencies:
+2. Install Python dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-   
-   
 
-## Usage
-
-### Run the Pipeline
-
-You can run the complete analysis pipeline using the unified script:
-
+### Running the Analytics Pipeline
+Generate the models and initial reports:
 ```bash
 python scripts/run_pipeline.py
 ```
 
-This will:
-1. Load and clean the oil price data
-2. Perform exploratory data analysis
-3. Build and sample the Bayesian model
-4. Check convergence diagnostics
-5. Extract change point results
-6. Generate visualizations
-7. Create a comprehensive report
+### Launching the Dashboard
+Explore results interactively:
 
-**Options:**
-- `--data`: Path to input CSV data (default: `data/BrentOilPrices.csv`)
-- `--output`: Directory to save outputs (default: `outputs/`)
-- `--draws`: Number of MCMC draws (default: 2000)
-- `--chains`: Number of MCMC chains (default: 4)
-
-Example:
+**1. Start Backend:**
 ```bash
-python scripts/run_pipeline.py 
+cd dashboard/backend
+pip install -r requirements.txt
+python app.py
 ```
 
-### Interactive Notebook
-
-For a step-by-step, interactive experience, use the Jupyter notebook:
-
+**2. Start Frontend:**
 ```bash
-jupyter notebook notebooks/oil_price_analysis.ipynb
+cd dashboard/frontend
+npm install
+npm run dev
 ```
 
-The notebook provides:
-- Cell-by-cell execution with explanations
-- Inline visualizations
-- Detailed interpretations
-- Easy experimentation with parameters
+---
+
+##  Methodology
+
+Our model uses a marginalized Bayesian approach to identify a single change point `τ` in a time series of `N` observations:
+
+-   **Priors**: 
+    -   `τ ~ DiscreteUniform(0, N-1)`
+    -   `μ_before, μ_after ~ Normal(historical_mean, 20)`
+    -   `σ_before, σ_after ~ HalfNormal(10)`
+-   **Likelihood**: Transition from one Gaussian process to another at the point `τ`.
+-   **Marginalization**: We marginalize over `tau` to enable efficient **NUTS** (No-U-Turn Sampler) sampling.
+
+---
 
 ## Project Structure
 
-```
-oil_price_changepoint/
-├── data/
-│   └── BrentOilPrices.csv          # Brent oil price dataset
-├── notebooks/
-│   ├── README.md                    # Notebook documentation
-│   └── oil_price_analysis.ipynb     # Interactive analysis notebook
-├── outputs/                         # Generated visualizations and reports
-├── scripts/
-│   └── run_pipeline.py              # Main execution script
-├── src/
-│   ├── __init__.py
-│   ├── data.py                  # Data loading and cleaning
-│   ├── eda.py                   # Exploratory data analysis
-│   ├── model.py                 # Bayesian model implementation
-│   ├── visualization.py         # Visualization functions
-│   └── report.py                # Report generation
-├── requirements.txt                 # Python dependencies
-└── README.md                        # This file
-```
+| Directory | Description |
+| :--- | :--- |
+| `dashboard/` | Full-stack analytics application (Flask/React) |
+| `src/` | Core Python library for modeling and EDA |
+| `scripts/` | Pipeline execution and utility scripts |
+| `notebooks/` | Interactive Jupyter research environment |
+| `outputs/` | Generated visualizations, reports, and logs |
+| `data/` | Raw and processed Brent oil price datasets |
 
-## Methodology
+---
 
-### Bayesian Model Components
 
-**Priors:**
-- Change point (τ): DiscreteUniform(0, n_days-1)
-- Price before (μ₁): Normal(historical_mean, 20)
-- Price after (μ₂): Normal(historical_mean, 20)
-- Volatility before (σ₁): HalfNormal(10)
-- Volatility after (σ₂): HalfNormal(10)
-
-**Likelihood:**
-- Prices ~ Normal(μ, σ), switching at change point τ
-
-## Output Files
-
-After running the analysis, the following files are generated in the `outputs/` directory:
-
-1. **analysis_report.md** - Comprehensive markdown report
-2. **changepoint_results.png** - Main results dashboard
-3. **trace_diagnostics.png** - MCMC convergence diagnostics
-4. **regime_comparison.png** - Detailed regime comparison
-5. **eda_time_series.png**, **eda_distribution.png**, **eda_volatility.png** - EDA plots
 
 
